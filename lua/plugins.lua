@@ -380,59 +380,50 @@ return {
 	},
 	{ "mitsuhiko/vim-jinja", ft = { "jinja", "jinja2" } },
 	{
-		"greggh/claude-code.nvim",
-		cmd = "ClaudeCode",
-		keys = { "<C-,>", "<leader>ac", "<leader>cC" },
-		config = function()
-			require("claude-code").setup({
-				window = {
-					split_ratio = 0.85,
-					position = "botright",
-					enter_insert = true,
-					hide_numbers = true,
-					hide_signcolumn = true,
-					float = {
-						width = "80%",
-						height = "80%",
-						row = "center",
-						col = "center",
-						relative = "editor",
-						border = "rounded",
-					},
-				},
-				refresh = {
-					enable = true,
-					updatetime = 100,
-					timer_interval = 1000,
-					show_notifications = true,
-				},
-				git = {
-					use_git_root = true,
-				},
-				shell = {
-					separator = "&&",
-					pushd_cmd = "pushd",
-					popd_cmd = "popd",
-				},
-				command = "claude",
-				command_variants = {
-					continue = "--continue",
-					resume = "--resume",
-					verbose = "--verbose",
-				},
-				keymaps = {
-					toggle = {
-						normal = "<C-,>",
-						terminal = "<C-,>",
-						variants = {
-							continue = "<leader>cC",
-							verbose = "<leader>ac",
+		"coder/claudecode.nvim",
+		dependencies = { "folke/snacks.nvim" },
+		config = true,
+		keys = {
+			{ "<leader>a", nil, desc = "AI/Claude Code" },
+			{ "<C-,>", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+			{ "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+			{ "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+			{ "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+			{ "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+			{ "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+			{ "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+			{ "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+			{
+				"<leader>as",
+				"<cmd>ClaudeCodeTreeAdd<cr>",
+				desc = "Add file",
+				ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
+			},
+			-- Diff management
+			{ "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+			{ "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+		},
+		opts = {
+			terminal = {
+				---@module "snacks"
+				---@type snacks.win.Config|{}
+				snacks_win_opts = {
+					position = "bottom",
+					height = 0.8,
+					width = 1.0,
+					border = "single",
+					keys = {
+						claude_hide = {
+							"<C-,>",
+							function(self)
+								self:hide()
+							end,
+							mode = "t",
+							desc = "Hide",
 						},
 					},
-					window_navigation = true,
-					scrolling = true,
 				},
-			})
-		end,
+			},
+		},
 	},
 }
