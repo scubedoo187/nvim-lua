@@ -277,11 +277,16 @@ return {
 
 	-- Search & Replace (on demand)
 	{
-		"nvim-pack/nvim-spectre",
-		cmd = "Spectre",
-		keys = { "<leader>ro", "<leader>rw", "<leader>rf" },
+		"MagicDuck/grug-far.nvim",
+		-- Note (lazy loading): grug-far.lua defers all it's requires so it's lazy by default
+		-- additional lazy config to defer loading is not really needed...
 		config = function()
-			require("spectre").setup()
+			-- optional setup call to override plugin options
+			-- alternatively you can set options with vim.g.grug_far = { ... }
+			require("grug-far").setup({
+				-- options, see Configuration section below
+				-- there are no required options atm
+			})
 		end,
 	},
 
@@ -400,10 +405,11 @@ return {
 				ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
 			},
 			-- Diff management
-			{ "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
-			{ "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+			-- { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+			-- { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
 		},
 		opts = {
+			terminal_cmd = "claude --dangerously-skip-permissions",
 			terminal = {
 				---@module "snacks"
 				---@type snacks.win.Config|{}

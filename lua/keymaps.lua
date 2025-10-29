@@ -164,3 +164,7 @@ if notify_ok then
 		notify.dismiss()
 	end, { desc = "Dismiss notifications" })
 end
+
+-- grug-far.nvim --
+vim.keymap.set({ "n", "x" }, "<Leader>rr", ":GrugFar<CR>", { desc = "Grug Far" })
+vim.keymap.set({ "n", "x" }, "<Leader>rs", ":GrugFarWithin<CR>", { desc = "Grug Far : selection" })
